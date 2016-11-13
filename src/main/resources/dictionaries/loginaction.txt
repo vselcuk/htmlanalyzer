@@ -1,0 +1,14 @@
+login
+auth
+authenticate
+signin
+validate
+verify
+session
+anmeldung
+authentifizieren
+anmelden
+bestaetigen
+bestatigen
+ueberpruefen
+uberprufen

@@ -1,0 +1,65 @@
+#if($errorMessage)
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        $errorMessage
+    </div>
+#else
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th class="text-nowrap" scope="row">Document type</th>
+            <td>#if($analyzeResult.documentType)$analyzeResult.documentType #else N/A #end</td>
+        </tr>
+        <tr>
+            <th class="text-nowrap" scope="row">Page Title</th>
+            <td>#if($analyzeResult.title)$analyzeResult.title #else N/A #end</td>
+        </tr>
+        <tr>
+            <th class="text-nowrap" scope="row">Heading level counts</th>
+            <td>
+                #if($analyzeResult.headingLevelCounter.size() > 0)
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3"><strong>Heading level</strong></div>
+                        <div class="col-xs-6 col-sm-3"><strong>Count</strong></div>
+                    </div>
+                    #foreach($level in $analyzeResult.headingLevelCounter.keySet())
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-3">$level.toUpperCase()</div>
+                            <div class="col-xs-6 col-sm-3">$analyzeResult.headingLevelCounter.get($level).value</div>
+                        </div>
+                    #end
+                #else
+                    N/A
+                #end
+            </td>
+        </tr>
+        <tr>
+            <th class="text-nowrap" scope="row">Hypermedia counts</th>
+            <td>
+                #if($analyzeResult.hyperMediaLinkSums)
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3"><strong>Internal links</strong></div>
+                        <div class="col-xs-6 col-sm-3"><strong>External links</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">$analyzeResult.hyperMediaLinkSums.internal.value</div>
+                        <div class="col-xs-6 col-sm-3">$analyzeResult.hyperMediaLinkSums.external.value</div>
+                    </div>
+                #else
+                    N/A
+                #end
+            </td>
+        </tr>
+        <tr>
+            <th class="text-nowrap" scope="row">Contains login form</th>
+            <td>
+                #if($analyzeResult.hasLoginForm)
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                #else
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                #end
+            </td>
+        </tr>
+        </tbody>
+    </table>
+#end

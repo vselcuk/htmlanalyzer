@@ -1,0 +1,78 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Html Analyzer</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/css/home.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var request, timeout;
+        var requestSent = false;
+
+        function submitForm(){
+            var url = $("#url").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/",
+                data: "url=" + url,
+                success : function(data){
+                    $("#result").html(data);
+                    requestSent = false;
+                },
+                error : function(data){
+                    $("#result").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Something went wrong. Please try again!</div>');
+                    requestSent = false;
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $("#form").submit(function (event) {
+                event.preventDefault();
+                if (!requestSent) {
+                    $("#result").html('<div class="loader center"></div>');
+                    timeout = setTimeout(
+                            function() {
+                                requestSent = true;
+                                submitForm();
+                            }, 500
+                    );
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="text-center">Html Analyzer</h2>
+
+        <div class="row text-center">
+            <form id="form" role="form" method="post">
+                <div class="row text-center">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control form-control-lg" id="url" name="url" placeholder="Please enter the url">
+                    </div>
+                    <div class="col-xs-2 text-left">
+                        <button type="submit" class="btn btn-primary">Analyze</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="result" class="row top-buffer text-center"></div>
+    </div>
+
+</body>
+
+ </html>
