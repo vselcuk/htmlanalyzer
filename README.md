@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vselcuk/htmlanalyzer.svg?branch=master)](https://travis-ci.org/vselcuk/htmlanalyzer)
 # Html Analyzer
 The aim of the project is simply to analyze the html document for the any given url. The analyze contains the following 
 points:
